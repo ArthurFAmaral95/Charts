@@ -19,3 +19,12 @@ body {
   background-size: contain;
   background-position: center center;
 }
+
+.container {
+  display: flex;
+}
+
+main {
+  padding: 1rem;
+  padding-top: 1.3rem;
+}

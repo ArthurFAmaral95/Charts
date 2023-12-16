@@ -1,8 +1,8 @@
 import './styles.css'
 
-import { SideBarOpen, HandleSideBar } from '../../types/types'
+import { SideBarOpen, HandleSideBar, ChangePage } from '../../types/types'
 
-type SideBarProps = SideBarOpen & HandleSideBar
+type SideBarProps = SideBarOpen & HandleSideBar & ChangePage
 
 export function SideBar(props: SideBarProps) {
   return (
@@ -15,16 +15,26 @@ export function SideBar(props: SideBarProps) {
         }}
       />
 
-      <div className="fields">
-        <div className="field">
+      <nav className="fields">
+        <div
+          className="field"
+          onClick={() => {
+            props.changePage('home')
+          }}
+        >
           <img src="./home.svg" alt="Home icon" />
           <span>Home</span>
         </div>
-        <div className="field">
+        <div
+          className="field"
+          onClick={() => {
+            props.changePage('user')
+          }}
+        >
           <img src="./user.svg" alt="User icon" />
           <span>User</span>
         </div>
-      </div>
+      </nav>
     </aside>
   )
 }

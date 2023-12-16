@@ -5,3 +5,7 @@ export type SideBarOpen = {
 export type HandleSideBar = {
   handleSideBar: () => void
 }
+
+export type ChangePage = {
+  changePage: (page: string) => void
+}
