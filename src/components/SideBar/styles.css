@@ -10,6 +10,12 @@ aside {
   flex-direction: column;
 
   gap: 2rem;
+
+  transition: width 0.3s;
+}
+
+aside.hidden {
+  width: 6rem;
 }
 
 aside img {
@@ -37,4 +43,11 @@ aside img {
   font-size: 2rem;
 
   text-transform: capitalize;
+  opacity: 1;
+
+  transition: opacity 0.3s;
+}
+
+aside.hidden .fields .field span {
+  opacity: 0;
 }

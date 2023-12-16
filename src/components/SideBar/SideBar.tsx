@@ -1,9 +1,19 @@
 import './styles.css'
 
-export function SideBar() {
+import { SideBarOpen, HandleSideBar } from '../../types/types'
+
+type SideBarProps = SideBarOpen & HandleSideBar
+
+export function SideBar(props: SideBarProps) {
   return (
-    <aside>
-      <img src="./menu.svg" alt="Menu icon" />
+    <aside className={props.sideBarOpen ? '' : 'hidden'}>
+      <img
+        src="./menu.svg"
+        alt="Menu icon"
+        onClick={() => {
+          props.handleSideBar()
+        }}
+      />
 
       <div className="fields">
         <div className="field">
