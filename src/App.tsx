@@ -46,7 +46,7 @@ export function App() {
         changePage={changePage}
       />
 
-      {currentPage === 'home' && <HomePage />}
+      {currentPage === 'home' && <HomePage count={usersData.length} />}
       {currentPage === 'user' && <UserPage />}
     </div>
   )

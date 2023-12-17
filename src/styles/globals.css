@@ -28,3 +28,32 @@ main {
   padding: 1rem;
   padding-top: 1.3rem;
 }
+
+h1 {
+  margin-left: 1rem;
+
+  font-size: 3rem;
+}
+
+/* BOX */
+
+.box {
+  background-color: white;
+
+  padding: 1rem;
+  margin: 1rem;
+
+  border-radius: 1rem;
+
+  box-shadow: 0 0 1rem 0.01rem black;
+
+  width: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.box h3 {
+  font-size: 1.5rem;
+}
