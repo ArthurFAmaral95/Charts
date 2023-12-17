@@ -11,11 +11,21 @@ export function App() {
 
   const [usersData, setUsersData] = useState([])
 
-  const apiUrl = 'https://api.github.com/users'
+  const apiUrl = import.meta.env.VITE_API_URL
+
+  console.log(apiUrl)
+
+  let usersCount = 0
+  let locations: string[] = []
+  let reposCount = 0
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  // useEffect(() => {
+  //   fillCounts()
+  // }, [usersData])
 
   function handleSideBar() {
     setSideBarOpen(!sideBarOpen)
@@ -36,7 +46,14 @@ export function App() {
       })
   }
 
-  console.log(usersData[0])
+  // function fillCounts() {
+  //   // usersData.map(user => {
+  //   //   axios.get(`${apiUrl}/${user.login}`).then(response => {
+  //   //     usersCount += response.data.followers
+  //   //   })
+  //   // })
+  // }
+  // console.log({ usersCount, locations, reposCount })
 
   return (
     <div className="container">
