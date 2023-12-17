@@ -56,4 +56,6 @@ h1 {
 
 .box h3 {
   font-size: 1.5rem;
+
+  text-transform: capitalize;
 }

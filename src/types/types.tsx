@@ -2,8 +2,9 @@ export type SideBarOpen = {
   sideBarOpen: boolean
 }
 
-export type Count = {
+export type CountBoxProps = {
   count: number
+  title: string
 }
 
 export type HandleSideBar = {
