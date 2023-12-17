@@ -14,7 +14,7 @@ body {
 
   background-color: rgb(201, 201, 201);
 
-  background-image: url(./public/github-mark-white.svg);
+  background-image: url(../github-mark-white.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
