@@ -15,9 +15,9 @@ export function App() {
 
   console.log(apiUrl)
 
-  let usersCount = 0
-  let locations: string[] = []
-  let reposCount = 0
+  // let usersCount = 0
+  // let locations: string[] = []
+  // let reposCount = 0
 
   useEffect(() => {
     fetchData()
