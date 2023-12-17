@@ -1,17 +1,20 @@
+import './styles.css'
+
 import { CountBox } from '../../components/CountBox/CountBox'
 
 import { useState, useEffect } from 'react'
 
-import axios from 'axios'
+import { Octokit } from 'octokit'
 
 export function HomePage() {
   const [usersData, setUsersData] = useState([])
+  const [usersCount, setUsersCount] = useState(0)
+  const [locations, setLocations] = useState<string[]>([])
+  const [reposCount, setReposCount] = useState(0)
 
-  const apiUrl = import.meta.env.VITE_API_URL
-
-  let usersCount = 0
-  // let locations: string[] = []
-  // let reposCount = 0
+  const octokit = new Octokit({
+    auth: import.meta.env.VITE_API_KEY
+  })
 
   useEffect(() => {
     fetchData()
@@ -21,34 +24,37 @@ export function HomePage() {
     fillCounts()
   }, [usersData])
 
-  function fetchData() {
-    axios
-      .get(apiUrl)
-      .then(response => {
-        setUsersData(response.data)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+  async function fetchData() {
+    try {
+      const response = await octokit.request('GET /users')
+
+      setUsersData(response.data)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   function fillCounts() {
-    // usersData.map(user => {
-    //   axios
-    //     .get(`${apiUrl}/${user.login}`)
-    //     .then(response => {
-    //       usersCount += response.data.followers
-    //     })
-    //     .then(() => {
-    //       console.log({ usersCount, locations, reposCount })
-    //     })
-    // })
+    usersData.map(async user => {
+      try {
+        const response = await octokit.request(`GET /users/${user.login}`)
+        setUsersCount(prevState => prevState + response.data.followers)
+        setReposCount(prevState => prevState + response.data.public_repos)
+        setLocations(prevState => [...prevState, response.data.location])
+      } catch (error) {
+        console.error(error)
+      }
+    })
   }
 
   return (
     <main id="home-page">
       <h1>Home Page</h1>
-      <CountBox count={usersCount} title='users'/>
+      <section className="counts">
+        <CountBox count={usersCount} title="users" />
+        <CountBox count={reposCount} title="repositories" />
+        <CountBox count={locations.length} title="locations" />
+      </section>
     </main>
   )
 }
