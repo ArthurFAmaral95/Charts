@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { Octokit } from 'octokit'
 
 export function HomePage() {
-  const [usersData, setUsersData] = useState([])
+  const [usersData, setUsersData] = useState<any[]>([])
   const [usersCount, setUsersCount] = useState(0)
   const [locations, setLocations] = useState<string[]>([])
   const [reposCount, setReposCount] = useState(0)
@@ -26,7 +26,7 @@ export function HomePage() {
 
   async function fetchData() {
     try {
-      const response = await octokit.request('GET /users')
+      const response: any = await octokit.request('GET /users')
 
       setUsersData(response.data)
     } catch (error) {
@@ -35,12 +35,21 @@ export function HomePage() {
   }
 
   function fillCounts() {
+    const fillLocations: string[] = []
     usersData.map(async user => {
       try {
         const response = await octokit.request(`GET /users/${user.login}`)
         setUsersCount(prevState => prevState + response.data.followers)
         setReposCount(prevState => prevState + response.data.public_repos)
-        setLocations(prevState => [...prevState, response.data.location])
+
+        if (
+          fillLocations.includes(response.data.location) ||
+          response.data.location === null
+        ) {
+        } else {
+          fillLocations.push(response.data.location)
+        }
+        setLocations(fillLocations)
       } catch (error) {
         console.error(error)
       }
