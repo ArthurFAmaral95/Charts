@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 import { Octokit } from 'octokit'
 
 import { Chart as ChartJS, registerables } from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+import { Bar, Pie } from 'react-chartjs-2'
 
 ChartJS.register(...registerables)
 
@@ -82,6 +82,43 @@ export function HomePage() {
     return count
   }
 
+  function countReposPerLocation() {
+    const count: number[] = []
+    locations.map(location => {
+      let numberOfUsers = 0
+      users.map(user => {
+        if (user.location === location) {
+          numberOfUsers += user.public_repos
+        }
+      })
+      count.push(numberOfUsers)
+    })
+
+    return count
+  }
+
+  function generateRandomNumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min) + min)
+  }
+
+  function generateRandomColor() {
+    const rgb = `rgb(${generateRandomNumber(0, 50)},${generateRandomNumber(
+      0,
+      150
+    )},${generateRandomNumber(0, 100)})`
+
+    return rgb
+  }
+
+  function colorLocation() {
+    const colors: string[] = []
+    locations.map(() => {
+      const color = generateRandomColor()
+      colors.push(color)
+    })
+    return colors
+  }
+
   return (
     <main id="home-page">
       <h1>Home Page</h1>
@@ -102,7 +139,7 @@ export function HomePage() {
               }
             ]
           }}
-          id="bar"
+          id="user-location"
           className="chart"
           options={{
             plugins: {
@@ -113,6 +150,37 @@ export function HomePage() {
                 font: {
                   size: 20
                 }
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+          }}
+        />
+        <Pie
+          data={{
+            labels: locations,
+            datasets: [
+              {
+                label: '# of Repos',
+                data: countReposPerLocation(),
+                backgroundColor: colorLocation()
+              }
+            ]
+          }}
+          id="repo-location"
+          className="chart"
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: 'Number of Repositories per Location',
+                align: 'center',
+                font: {
+                  size: 20
+                }
+              },
+              legend: {
+                display: false
               }
             },
             responsive: true,

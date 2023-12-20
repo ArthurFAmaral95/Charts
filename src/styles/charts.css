@@ -1,5 +1,8 @@
 .charts {
   margin-top: 2rem;
+
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .chart {
@@ -10,11 +13,17 @@
 
   border-radius: 1rem;
 
-  box-shadow: 0 0 1rem 0.01rem black;
+  box-shadow: 0 0 1rem 0.01rem rgb(0, 0, 0);
+
+  width: calc(100% - 2rem) !important;
+  height: fit-content !important;
+  max-height: 30rem;
 }
 
-#bar {
-  max-width: 78rem;
-  width: 100% !important;
-  height: 30rem !important;
+#user-location {
+  max-width: 70rem;
+}
+
+#repo-location {
+  max-width: 40rem;
 }
