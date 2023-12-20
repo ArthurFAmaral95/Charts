@@ -73,7 +73,7 @@ export function HomePage() {
       let numberOfUsers = 0
       users.map(user => {
         if (user.location === location) {
-          numberOfUsers++
+          numberOfUsers += user.followers
         }
       })
       count.push(numberOfUsers)
@@ -103,15 +103,20 @@ export function HomePage() {
             ]
           }}
           id="bar"
+          className="chart"
           options={{
             plugins: {
               title: {
                 display: true,
                 text: 'Number of Users per Location',
-                align: 'center'
+                align: 'center',
+                font: {
+                  size: 20
+                }
               }
             },
-            responsive: true
+            responsive: true,
+            maintainAspectRatio: false
           }}
         />
       </section>
