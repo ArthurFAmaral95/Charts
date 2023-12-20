@@ -1,5 +1,7 @@
 aside {
-  width: 15rem;
+  grid-area: aside;
+
+  width: 100%;
   height: 100vh;
 
   background-color: rgb(28, 28, 28);
@@ -10,12 +12,6 @@ aside {
   flex-direction: column;
 
   gap: 2rem;
-
-  transition: width 0.3s;
-}
-
-aside.hidden {
-  width: 6rem;
 }
 
 aside img {
@@ -48,6 +44,6 @@ aside img {
   transition: opacity 0.3s;
 }
 
-aside.hidden .fields .field span {
+.container.hidden aside .fields .field span {
   opacity: 0;
 }

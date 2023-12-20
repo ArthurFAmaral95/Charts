@@ -1,12 +1,12 @@
 import './styles.css'
 
-import { SideBarOpen, HandleSideBar, ChangePage } from '../../types/types'
+import { HandleSideBar, ChangePage } from '../../types/types'
 
-type SideBarProps = SideBarOpen & HandleSideBar & ChangePage
+type SideBarProps = HandleSideBar & ChangePage
 
 export function SideBar(props: SideBarProps) {
   return (
-    <aside className={props.sideBarOpen ? '' : 'hidden'}>
+    <aside>
       <img
         src="./menu.svg"
         alt="Menu icon"

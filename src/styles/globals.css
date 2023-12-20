@@ -21,12 +21,21 @@ body {
 }
 
 .container {
-  display: flex;
+  display: grid;
+  grid-template-areas: 'aside main';
+  grid-template-columns: 15rem 1fr;
+
+  transition: all 0.3s;
 }
 
 main {
   padding: 1rem;
   padding-top: 1.3rem;
+  grid-area: main;
+}
+
+.container.hidden {
+  grid-template-columns: 6rem 1fr;
 }
 
 h1 {

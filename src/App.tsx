@@ -16,12 +16,8 @@ export function App() {
   }
 
   return (
-    <div className="container">
-      <SideBar
-        sideBarOpen={sideBarOpen}
-        handleSideBar={handleSideBar}
-        changePage={changePage}
-      />
+    <div className={sideBarOpen ? 'container' : 'container hidden'}>
+      <SideBar handleSideBar={handleSideBar} changePage={changePage} />
 
       {currentPage === 'home' && <HomePage />}
       {currentPage === 'user' && <UserPage />}
