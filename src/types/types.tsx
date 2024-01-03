@@ -14,3 +14,7 @@ export type HandleSideBar = {
 export type ChangePage = {
   changePage: (page: string) => void
 }
+
+export type HandleFormSubmit = {
+  handleFormSubmit: (login: string) => void
+}
