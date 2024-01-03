@@ -1,5 +1,8 @@
-#user-form {
+.form{
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-labels {
@@ -14,7 +17,7 @@
   font-size: 1.5rem;
 }
 
-.form-labels span {
+.form span {
   color: red;
 }
 
