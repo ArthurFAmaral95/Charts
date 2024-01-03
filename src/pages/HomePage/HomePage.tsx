@@ -20,6 +20,7 @@ export function HomePage() {
   const [usersCount, setUsersCount] = useState(0)
   const [locations, setLocations] = useState<string[]>([])
   const [reposCount, setReposCount] = useState(0)
+  const [companies, setCompanies] = useState<string[]>([])
 
   const octokit = new Octokit({
     auth: import.meta.env.VITE_API_KEY
@@ -55,6 +56,7 @@ export function HomePage() {
   function fillCounts() {
     const fillLocations: string[] = []
     const individualUsers: any[] = []
+    const fillCompanies: string[] = []
     usersData.map(async user => {
       try {
         const response = await octokit.request(`GET /users/${user.login}`)
@@ -69,8 +71,20 @@ export function HomePage() {
         } else {
           fillLocations.push(response.data.location)
         }
+
+        if (response.data.company === null) {
+        } else {
+          const userCompanies: string[] = response.data.company.split(',')
+          userCompanies.map(company => {
+            if (!fillCompanies.includes(company)) {
+              fillCompanies.push(company)
+            }
+          })
+        }
+
         setLocations(fillLocations)
         setUsers(individualUsers)
+        setCompanies(fillCompanies)
       } catch (error) {
         console.error(error)
       }
@@ -146,6 +160,7 @@ export function HomePage() {
         <CountBox count={usersCount} title="users" />
         <CountBox count={reposCount} title="repositories" />
         <CountBox count={locations.length} title="locations" />
+        <CountBox count={companies.length} title="companies" />
       </section>
       <section className="charts">
         <Bar
