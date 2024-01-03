@@ -9,13 +9,14 @@ import { useState, useEffect } from 'react'
 import { Octokit } from 'octokit'
 
 import { Chart as ChartJS, registerables } from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
+import { Bar, Pie, Radar } from 'react-chartjs-2'
 
 ChartJS.register(...registerables)
 
 export function HomePage() {
   const [usersData, setUsersData] = useState<any[]>([])
   const [users, setUsers] = useState<any[]>([])
+  const [logins, setLogins] = useState<string[]>([])
   const [usersCount, setUsersCount] = useState(0)
   const [locations, setLocations] = useState<string[]>([])
   const [reposCount, setReposCount] = useState(0)
@@ -30,6 +31,7 @@ export function HomePage() {
 
   useEffect(() => {
     fillCounts()
+    usersLogins()
   }, [usersData])
 
   async function fetchData() {
@@ -42,6 +44,14 @@ export function HomePage() {
     }
   }
 
+  function usersLogins() {
+    const logins: string[] = []
+    usersData.map(user => {
+      logins.push(user.login)
+    })
+    setLogins(logins)
+  }
+
   function fillCounts() {
     const fillLocations: string[] = []
     const individualUsers: any[] = []
@@ -49,7 +59,7 @@ export function HomePage() {
       try {
         const response = await octokit.request(`GET /users/${user.login}`)
         individualUsers.push(response.data)
-        setUsersCount(prevState => prevState + response.data.followers)
+        setUsersCount(prevState => prevState + 1)
         setReposCount(prevState => prevState + response.data.public_repos)
 
         if (
@@ -73,7 +83,7 @@ export function HomePage() {
       let numberOfUsers = 0
       users.map(user => {
         if (user.location === location) {
-          numberOfUsers += user.followers
+          numberOfUsers += 1
         }
       })
       count.push(numberOfUsers)
@@ -92,6 +102,16 @@ export function HomePage() {
         }
       })
       count.push(numberOfUsers)
+    })
+
+    return count
+  }
+
+  function countReposPerUser() {
+    const count: number[] = []
+
+    users.map(user => {
+      count.push(user.public_repos)
     })
 
     return count
@@ -130,32 +150,36 @@ export function HomePage() {
       <section className="charts">
         <Bar
           data={{
-            labels: locations,
+            labels: logins,
             datasets: [
               {
-                label: '# of Users',
-                data: countUserPerLocation(),
+                label: '# of Repos',
+                data: countReposPerUser(),
                 backgroundColor: 'black'
               }
             ]
           }}
-          id="user-location"
+          id="repo-user"
           className="chart"
           options={{
             plugins: {
               title: {
                 display: true,
-                text: 'Number of Users per Location',
+                text: 'Number of Repositories per User',
                 align: 'center',
                 font: {
                   size: 20
                 }
+              },
+              legend: {
+                display: false
               }
             },
             responsive: true,
             maintainAspectRatio: false
           }}
         />
+
         <Pie
           data={{
             labels: locations,
@@ -185,6 +209,42 @@ export function HomePage() {
             },
             responsive: true,
             maintainAspectRatio: false
+          }}
+        />
+
+        <Radar
+          data={{
+            labels: locations,
+            datasets: [
+              {
+                label: '# of Users',
+                data: countUserPerLocation()
+              }
+            ]
+          }}
+          id="user-location"
+          className="chart"
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: 'Number of Users per Location',
+                align: 'center',
+                font: {
+                  size: 20
+                }
+              },
+              legend: {
+                display: false
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              r: {
+                suggestedMin: 0
+              }
+            }
           }}
         />
       </section>

@@ -20,10 +20,11 @@
   max-height: 30rem;
 }
 
-#user-location {
-  max-width: 70rem;
+#repo-user {
+  max-width: 82rem;
 }
 
-#repo-location {
+#repo-location,
+#user-location {
   max-width: 40rem;
 }
