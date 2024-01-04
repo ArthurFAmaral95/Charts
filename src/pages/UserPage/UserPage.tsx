@@ -3,11 +3,16 @@ import { useState, useEffect } from 'react'
 import { Octokit } from 'octokit'
 
 import { UserForm } from '../../components/UserForm/UserForm'
+import { UserProfile } from '../../components/UserProfile/UserProfile'
+
+import { UserProps } from '../../types/types'
 
 export function UserPage() {
   const [login, setLogin] = useState<string>('')
-  const [userData, setUserData] = useState<any[]>([])
+  const [userData, setUserData] = useState<UserProps>({})
   const [requestError, setRequestError] = useState(false)
+
+  const showUserInfo = login !== '' && !requestError
 
   const octokit = new Octokit({
     auth: import.meta.env.VITE_API_KEY
@@ -31,7 +36,7 @@ export function UserPage() {
       } catch (error: any) {
         if (error.message === 'Not Found') {
           setRequestError(true)
-          setUserData([])
+          setUserData({})
         }
       }
     }
@@ -44,6 +49,11 @@ export function UserPage() {
         <UserForm handleFormSubmit={handleFormSubmit} />
         {requestError && <span>User not found</span>}
       </section>
+      {showUserInfo && (
+        <section className="user-info">
+          <UserProfile userData={userData} />
+        </section>
+      )}
     </main>
   )
 }
