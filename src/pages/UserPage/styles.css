@@ -14,10 +14,19 @@
 
 .main-left {
   grid-area: main-left;
-
-  margin: 1rem;
 }
 
 .main-right {
   grid-area: main-right;
+}
+
+.repos-boxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.repos h2 {
+  font-size: 2rem;
+
+  margin: 0.5rem 1rem;
 }

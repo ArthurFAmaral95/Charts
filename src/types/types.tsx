@@ -52,6 +52,14 @@ export type UserProfileProps = {
   name?: string
 }
 
+export type RepoBoxProps = {
+  name?: string
+  description?: string
+  stars?: number
+  forks?: number
+  login?: string
+}
+
 export type HandleSideBar = {
   handleSideBar: () => void
 }

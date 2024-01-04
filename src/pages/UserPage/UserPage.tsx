@@ -11,10 +11,13 @@ import { UserProps } from '../../types/types'
 
 import { CountBox } from '../../components/CountBox/CountBox'
 
+import { RepoBox } from '../../components/RepoBox/RepoBox'
+
 export function UserPage() {
   const [login, setLogin] = useState<string>('')
   const [userData, setUserData] = useState<UserProps>({})
   const [requestError, setRequestError] = useState(false)
+  const [userRepos, setUserRepos] = useState<any[]>([])
 
   const showUserInfo = login !== '' && !requestError
 
@@ -24,6 +27,7 @@ export function UserPage() {
 
   useEffect(() => {
     fetchUserData()
+    fetchUserRepos()
   }, [login])
 
   function handleFormSubmit(login: string) {
@@ -46,6 +50,48 @@ export function UserPage() {
     }
   }
 
+  async function fetchUserRepos() {
+    if (login !== '') {
+      try {
+        const response = await octokit.request(`GET /users/${login}/repos`)
+        setUserRepos(response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
+  const renderReposBoxes: any[] = []
+
+  if (userRepos.length === 0) {
+  } else if (userRepos.length <= 4) {
+    userRepos.map(repo => {
+      renderReposBoxes.push(
+        <RepoBox
+          name={repo.name}
+          description={repo.description}
+          forks={repo.forks}
+          stars={repo.stargazers_count}
+          key={repo.name}
+          login={login}
+        />
+      )
+    })
+  } else {
+    for (let i = 1; i <= 4; i++) {
+      renderReposBoxes.push(
+        <RepoBox
+          name={userRepos[i].name}
+          description={userRepos[i].description}
+          forks={userRepos[i].forks}
+          stars={userRepos[i].stargazers_count}
+          key={userRepos[i].name}
+          login={login}
+        />
+      )
+    }
+  }
+
   return (
     <main id="user-page">
       <div className="main-top">
@@ -55,8 +101,8 @@ export function UserPage() {
           {requestError && <span>User not found</span>}
         </section>
       </div>
-      <div className="main-left">
-        {showUserInfo && (
+      {showUserInfo && (
+        <div className="main-left">
           <section className="user-info">
             <UserProfile
               avatar_url={userData.avatar_url}
@@ -68,15 +114,21 @@ export function UserPage() {
               name={userData.name}
             />
           </section>
-        )}
-      </div>
-      <div className="main-right">
-        <section className="counts">
-          <CountBox count={userData.followers} title="followers" />
-          <CountBox count={userData.following} title="following" />
-          <CountBox count={userData.public_repos} title="Repositories" />
-        </section>
-      </div>
+        </div>
+      )}
+      {showUserInfo && (
+        <div className="main-right">
+          <section className="counts">
+            <CountBox count={userData.followers} title="followers" />
+            <CountBox count={userData.following} title="following" />
+            <CountBox count={userData.public_repos} title="Repositories" />
+          </section>
+          <section className="repos">
+            <h2>Main repos</h2>
+            <div className="repos-boxes">{renderReposBoxes}</div>
+          </section>
+        </div>
+      )}
     </main>
   )
 }

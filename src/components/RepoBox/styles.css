@@ -1,0 +1,54 @@
+.repos-boxes .repo {
+  width: 30rem;
+
+  justify-content: space-evenly;
+}
+
+.repos-boxes .repo .top,
+.repos-boxes .repo .bottom {
+  display: flex;
+
+  align-items: center;
+}
+
+.repos-boxes .repo .top {
+  gap: 0.5rem;
+}
+
+.repo-name,
+.repo-description {
+  font-size: 1.2rem;
+}
+
+.repos-boxes .repo .middle {
+  height: 4rem;
+  overflow: hidden;
+}
+
+.repos-boxes .repo .bottom {
+  justify-content: space-between;
+}
+
+.stars-forks,
+.languages-list {
+  list-style: none;
+
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.stars-forks li,
+.languages-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.languages-list li .circle {
+  width: 0.5rem;
+  height: 0.5rem;
+
+  background-color: black;
+  border-radius: 50%;
+}

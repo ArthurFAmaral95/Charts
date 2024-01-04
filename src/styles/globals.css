@@ -71,3 +71,9 @@ h1 {
 
   text-transform: capitalize;
 }
+
+/* ICONS */
+
+.icon {
+  max-width: 2.5rem;
+}

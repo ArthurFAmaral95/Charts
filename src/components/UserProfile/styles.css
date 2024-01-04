@@ -1,17 +1,12 @@
-.user-profile {
-  background-color: white;
+.user-profile.box {
   padding: 2rem 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 1rem 0.01rem rgb(0, 0, 0);
 
   width: 30rem;
 
-  display: flex;
-  flex-direction: column;
   gap: 2rem;
 }
 
-.user-profile img {
+.user-profile .user-avatar {
   max-width: 15rem;
   border-radius: 50%;
 }
