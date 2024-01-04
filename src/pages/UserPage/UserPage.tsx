@@ -51,7 +51,15 @@ export function UserPage() {
       </section>
       {showUserInfo && (
         <section className="user-info">
-          <UserProfile userData={userData} />
+          <UserProfile
+            avatar_url={userData.avatar_url}
+            bio={userData.bio}
+            company={userData.company}
+            email={userData.email}
+            location={userData.location}
+            login={userData.login}
+            name={userData.name}
+          />
         </section>
       )}
     </main>

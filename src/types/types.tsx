@@ -30,7 +30,7 @@ export type UserProps = {
   node_id?: string
   organizations_url?: string
   public_gists?: string | number
-  public_repos?:  number
+  public_repos?: number
   received_events_url?: string
   repos_url?: string
   site_admin?: boolean
@@ -43,7 +43,13 @@ export type UserProps = {
 }
 
 export type UserProfileProps = {
-  userData: UserProps
+  avatar_url?: string
+  bio?: string
+  company?: string
+  email?: string
+  location?: string
+  login?: string
+  name?: string
 }
 
 export type HandleSideBar = {
