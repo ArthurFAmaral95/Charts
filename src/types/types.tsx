@@ -3,7 +3,7 @@ export type SideBarOpen = {
 }
 
 export type CountBoxProps = {
-  count: number
+  count: number | string | undefined
   title: string
 }
 
