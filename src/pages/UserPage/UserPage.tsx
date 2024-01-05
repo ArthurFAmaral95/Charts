@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react'
 
 import { Octokit } from 'octokit'
 
+import { Chart as ChartJS, registerables } from 'chart.js'
+
+import { Pie } from 'react-chartjs-2'
+
+ChartJS.register(...registerables)
+
 import { UserForm } from '../../components/UserForm/UserForm'
 import { UserProfile } from '../../components/UserProfile/UserProfile'
 
@@ -18,6 +24,9 @@ export function UserPage() {
   const [userData, setUserData] = useState<UserProps>({})
   const [requestError, setRequestError] = useState(false)
   const [userRepos, setUserRepos] = useState<any[]>([])
+  const [languages, setLanguages] = useState<string[]>([])
+  const [languagesUsage, setLanguagesUsage] = useState<any[]>([])
+  const [languagesCount, setLanguagesCount] = useState([0])
 
   const showUserInfo = login !== '' && !requestError
 
@@ -29,6 +38,14 @@ export function UserPage() {
     fetchUserData()
     fetchUserRepos()
   }, [login])
+
+  useEffect(() => {
+    fetchLanguages()
+  }, [userRepos])
+
+  useEffect(() => {
+    countUsageOfLanguages()
+  }, [languagesUsage])
 
   function handleFormSubmit(login: string) {
     setLogin(login)
@@ -59,6 +76,60 @@ export function UserPage() {
         console.error(error)
       }
     }
+  }
+
+  function fetchLanguages() {
+    const uniqueLanguages: string[] = []
+    const languagesObjects: any[] = []
+    userRepos.map(async repo => {
+      const response = await octokit.request(
+        `GET /repos/${login}/${repo.name}/languages`
+      )
+
+      for (const language in response.data) {
+        if (!uniqueLanguages.includes(language)) {
+          uniqueLanguages.push(language)
+        }
+      }
+
+      languagesObjects.push(response.data)
+    })
+
+    setLanguages(uniqueLanguages)
+    setLanguagesUsage(languagesObjects)
+  }
+
+  function countUsageOfLanguages() {
+    setTimeout(() => {
+      const count: number[] = []
+      languages.map(async language => {
+        let languageSum = 0
+        languagesUsage.map(index => {
+          for (const item in index) {
+            if (item === language) {
+              languageSum += index[item]
+            }
+          }
+        })
+        count.push(languageSum)
+      })
+      setLanguagesCount(count)
+    }, 2000)
+  }
+
+  function languageUsagePercentage() {
+    let total = 0
+    const percentages: string[] = []
+    languagesCount.map(value => {
+      total += value
+    })
+
+    languagesCount.map(value => {
+      const percentage = ((value / total) * 100).toFixed(0)
+      percentages.push(percentage)
+    })
+
+    return percentages
   }
 
   const renderReposBoxes: any[] = []
@@ -126,6 +197,68 @@ export function UserPage() {
           <section className="repos">
             <h2>Main repos</h2>
             <div className="repos-boxes">{renderReposBoxes}</div>
+          </section>
+          <section className="charts">
+            <h2>User Stats</h2>
+            <div className="charts-container">
+              <Pie
+                data={{
+                  labels: languages,
+                  datasets: [
+                    {
+                      label: 'Language usage (%)',
+                      data: languageUsagePercentage(),
+                      backgroundColor: [
+                        'red',
+                        'green',
+                        'yellow',
+                        'blue',
+                        'magenta',
+                        'orange',
+                        'purple',
+                        'gray',
+                        'brown',
+                        'chocolate',
+                        'darkblue',
+                        'tomato',
+                        'teal',
+                        'seagreen',
+                        'sienna',
+                        'salmon',
+                        'royalblue',
+                        'pink',
+                        'peru',
+                        'olive',
+                        'navy',
+                        'indigo',
+                        'lime'
+                      ]
+                    }
+                  ]
+                }}
+                id="language-usage"
+                className="chart"
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Languages used (%)',
+                      align: 'center',
+                      font: {
+                        size: 20
+                      }
+                    },
+                    legend: {
+                      display: true,
+                      align: 'center',
+                      position: 'left'
+                    }
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false
+                }}
+              />
+            </div>
           </section>
         </div>
       )}
