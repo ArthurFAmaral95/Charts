@@ -41,7 +41,9 @@ export function HomePage() {
   }, [usersData])
 
   useEffect(() => {
-    fillUserPerDate()
+    setTimeout(() => {
+      fillUserPerDate()
+    }, 2000)
   }, [users])
 
   async function fetchData() {
