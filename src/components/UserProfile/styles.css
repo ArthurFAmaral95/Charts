@@ -1,0 +1,39 @@
+.user-profile .user-avatar {
+  max-width: 15rem;
+  border-radius: 50%;
+}
+
+.user-profile .user-pic-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-pic-name .name {
+  font-size: 2.5rem;
+}
+
+.user-pic-name .bio {
+  font-size: 1.5rem;
+
+  text-align: center;
+}
+
+.user-social-info ul {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-social-info ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-social-info ul li span {
+  font-size: 1.2rem;
+}

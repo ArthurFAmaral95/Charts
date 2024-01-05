@@ -1,0 +1,14 @@
+.dates-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+}
+
+.dates-list span {
+  font-size: 1.2rem;
+}
+
+.dates-list span.label {
+  font-weight: 700;
+}

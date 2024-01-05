@@ -1,0 +1,33 @@
+#user-page {
+  display: grid;
+  grid-template-areas:
+    'main-top main-top'
+    'main-left main-right';
+
+  grid-template-rows: 10.5rem 1fr;
+  grid-template-columns: 35rem 1fr;
+}
+
+.main-top {
+  grid-area: main-top;
+}
+
+.main-left {
+  grid-area: main-left;
+}
+
+.main-right {
+  grid-area: main-right;
+}
+
+.repos-boxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.repos h2 , .charts h2{
+  font-size: 2rem;
+
+  margin: 0.5rem 1rem;
+}
+

@@ -4,6 +4,8 @@ import '../../styles/charts.css'
 
 import { CountBox } from '../../components/CountBox/CountBox'
 
+import { UserProps } from '../../types/types'
+
 import { useState, useEffect } from 'react'
 
 import { Octokit } from 'octokit'
@@ -15,7 +17,7 @@ ChartJS.register(...registerables)
 
 export function HomePage() {
   const [usersData, setUsersData] = useState<any[]>([])
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<UserProps[]>([])
   const [logins, setLogins] = useState<string[]>([])
   const [usersCount, setUsersCount] = useState(0)
   const [locations, setLocations] = useState<string[]>([])
@@ -109,13 +111,13 @@ export function HomePage() {
   function countReposPerLocation() {
     const count: number[] = []
     locations.map(location => {
-      let numberOfUsers = 0
+      let numberOfRepos = 0
       users.map(user => {
-        if (user.location === location) {
-          numberOfUsers += user.public_repos
+        if (user.location === location && user.public_repos != undefined) {
+          numberOfRepos += user.public_repos
         }
       })
-      count.push(numberOfUsers)
+      count.push(numberOfRepos)
     })
 
     return count
@@ -125,7 +127,9 @@ export function HomePage() {
     const count: number[] = []
 
     users.map(user => {
-      count.push(user.public_repos)
+      if (user.public_repos) {
+        count.push(user.public_repos)
+      }
     })
 
     return count
@@ -219,7 +223,13 @@ export function HomePage() {
                 }
               },
               legend: {
-                display: false
+                display: true,
+                align: 'center',
+                position: 'left',
+                fullSize: false,
+                labels: {
+                  boxWidth: 10
+                }
               }
             },
             responsive: true,

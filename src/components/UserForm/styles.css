@@ -1,0 +1,55 @@
+.form{
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-labels {
+  margin-bottom: 0.5rem;
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.form-labels label {
+  font-size: 1.5rem;
+}
+
+.form span {
+  color: red;
+}
+
+.form-input {
+  display: flex;
+  align-items: center;
+}
+
+input,
+button {
+  padding: 0.5rem 1rem;
+
+  font-size: 1.5rem;
+
+  width: 20rem;
+}
+
+input {
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+}
+
+button {
+  width: 5rem;
+  height: 3.1rem;
+
+  background-image: url('../search.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  cursor: pointer;
+
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}

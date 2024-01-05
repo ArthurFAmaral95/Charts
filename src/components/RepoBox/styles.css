@@ -1,0 +1,21 @@
+.repo-name,
+.repo-description {
+  font-size: 1.2rem;
+}
+
+.stars-forks,
+.languages-list {
+  list-style: none;
+
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.languages-list li .circle {
+  width: 0.5rem;
+  height: 0.5rem;
+
+  background-color: black;
+  border-radius: 50%;
+}
