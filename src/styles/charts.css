@@ -18,13 +18,9 @@
   width: calc(100% - 2rem) !important;
   height: fit-content !important;
   max-height: 30rem;
-}
-
-#repo-user {
   max-width: 82rem;
 }
 
-#repo-location,
-#user-location {
-  max-width: 40rem;
+#user-page .charts {
+  flex-direction: column;
 }

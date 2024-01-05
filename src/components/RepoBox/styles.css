@@ -1,5 +1,6 @@
 .repos-boxes .repo {
-  width: 30rem;
+  width: calc(50% - 2rem);
+  min-width: 30rem;
 
   justify-content: space-evenly;
 }

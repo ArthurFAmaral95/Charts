@@ -251,7 +251,11 @@ export function UserPage() {
                     legend: {
                       display: true,
                       align: 'center',
-                      position: 'left'
+                      position: 'left',
+                      fullSize:false,
+                      labels:{
+                        boxWidth:10
+                      }
                     }
                   },
                   responsive: true,

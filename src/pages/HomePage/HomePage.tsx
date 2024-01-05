@@ -223,7 +223,13 @@ export function HomePage() {
                 }
               },
               legend: {
-                display: false
+                display: true,
+                align: 'center',
+                position: 'left',
+                fullSize: false,
+                labels: {
+                  boxWidth: 10
+                }
               }
             },
             responsive: true,
