@@ -6,7 +6,7 @@ import { Octokit } from 'octokit'
 
 import { Chart as ChartJS, registerables } from 'chart.js'
 
-import { Pie } from 'react-chartjs-2'
+import { Pie, Bar } from 'react-chartjs-2'
 
 ChartJS.register(...registerables)
 
@@ -27,6 +27,11 @@ export function UserPage() {
   const [languages, setLanguages] = useState<string[]>([])
   const [languagesUsage, setLanguagesUsage] = useState<any[]>([])
   const [languagesCount, setLanguagesCount] = useState([0])
+
+  let totalStars = 0
+  let totalForks = 0
+  let totalWatchers = 0
+  let totalIssues = 0
 
   const showUserInfo = login !== '' && !requestError
 
@@ -163,6 +168,13 @@ export function UserPage() {
     }
   }
 
+  userRepos.map(repo => {
+    totalStars += repo.stargazers_count
+    totalForks += repo.forks
+    totalWatchers += repo.watchers
+    totalIssues += repo.open_issues
+  })
+
   return (
     <main id="user-page">
       <div className="main-top">
@@ -252,10 +264,46 @@ export function UserPage() {
                       display: true,
                       align: 'center',
                       position: 'left',
-                      fullSize:false,
-                      labels:{
-                        boxWidth:10
+                      fullSize: false,
+                      labels: {
+                        boxWidth: 10
                       }
+                    }
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false
+                }}
+              />
+              <Bar
+                data={{
+                  labels: ['Stars', 'Forks', 'Watchers', 'Issues'],
+                  datasets: [
+                    {
+                      label: '',
+                      data: [
+                        totalStars,
+                        totalForks,
+                        totalWatchers,
+                        totalIssues
+                      ],
+                      backgroundColor: ['olive', 'navy', 'peru', 'lime']
+                    }
+                  ]
+                }}
+                id="repos- stats-count"
+                className="chart"
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'Repos stats',
+                      align: 'center',
+                      font: {
+                        size: 20
+                      }
+                    },
+                    legend: {
+                      display: false
                     }
                   },
                   responsive: true,
