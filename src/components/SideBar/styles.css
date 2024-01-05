@@ -14,16 +14,24 @@ aside {
   gap: 2rem;
 }
 
+aside img,
+.fields {
+  position: sticky;
+}
+
 aside img {
   max-width: 4rem;
 
   cursor: pointer;
+  top: 1rem;
 }
 
 .fields {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  top: 7rem;
 }
 
 .fields .field {

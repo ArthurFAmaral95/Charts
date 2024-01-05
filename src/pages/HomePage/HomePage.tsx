@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react'
 import { Octokit } from 'octokit'
 
 import { Chart as ChartJS, registerables } from 'chart.js'
-import { Bar, Pie, Radar } from 'react-chartjs-2'
+import { Bar, Pie, Radar, Line } from 'react-chartjs-2'
 
 ChartJS.register(...registerables)
 
@@ -23,6 +23,9 @@ export function HomePage() {
   const [locations, setLocations] = useState<string[]>([])
   const [reposCount, setReposCount] = useState(0)
   const [companies, setCompanies] = useState<string[]>([])
+  const [dates, setDates] = useState<(string | undefined)[]>([])
+  const [newUsersPerDate, setNewUsersPerDate] = useState<number[]>([])
+  const [totalUsersPerDate, setTotalUsersPerDate] = useState<number[]>([])
 
   const octokit = new Octokit({
     auth: import.meta.env.VITE_API_KEY
@@ -36,6 +39,10 @@ export function HomePage() {
     fillCounts()
     usersLogins()
   }, [usersData])
+
+  useEffect(() => {
+    fillUserPerDate()
+  }, [users])
 
   async function fetchData() {
     try {
@@ -157,6 +164,36 @@ export function HomePage() {
     return colors
   }
 
+  function fillUserPerDate() {
+    const uniqueDates: (string | undefined)[] = []
+    users.map(user => {
+      if (!uniqueDates.includes(user.created_at?.split('T')[0])) {
+        uniqueDates.push(user.created_at?.split('T')[0])
+      }
+    })
+
+    setDates(uniqueDates)
+
+    const dayArray: number[] = []
+    const totalArray: number[] = [0]
+
+    uniqueDates.map(date => {
+      let count = 0
+
+      users.map(user => {
+        if (user.created_at?.split('T')[0] === date) {
+          count++
+        }
+      })
+      dayArray.push(count)
+
+      totalArray.push(count + totalArray[totalArray.length - 1])
+    })
+    totalArray.shift()
+    setNewUsersPerDate(dayArray)
+    setTotalUsersPerDate(totalArray)
+  }
+
   return (
     <main id="home-page">
       <h1>Home Page</h1>
@@ -268,6 +305,47 @@ export function HomePage() {
             scales: {
               r: {
                 suggestedMin: 0
+              }
+            }
+          }}
+        />
+        <Line
+          data={{
+            labels: dates,
+            datasets: [
+              {
+                label: '# of new user',
+                data: newUsersPerDate,
+                fill: 'start'
+              },
+              {
+                label: '# of total users',
+                data: totalUsersPerDate,
+                fill: 'start'
+              }
+            ]
+          }}
+          id="date-users"
+          className="chart"
+          options={{
+            plugins: {
+              title: {
+                display: true,
+                text: 'Number of users',
+                align: 'center',
+                font: {
+                  size: 20
+                }
+              },
+              legend: {
+                display: true
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              yAxix: {
+                min: 0
               }
             }
           }}
