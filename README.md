@@ -44,4 +44,5 @@ This project was developed using the following technologies:
 
 - Download the zip file, download the modules needed with <code>npm install</code>, run <code>npm run dev</code> on the terminal and access localhost on a browser.
 
-- Access it <a src='https://charts-olive.vercel.app/' target='_blank'>online</a>.
+- [Access the final project online](https://charts-olive.vercel.app/)
+
