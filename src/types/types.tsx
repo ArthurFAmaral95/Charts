@@ -60,6 +60,11 @@ export type RepoBoxProps = {
   login?: string
 }
 
+export type DatesBoxProps = {
+  created?: string
+  modified?: string
+}
+
 export type HandleSideBar = {
   handleSideBar: () => void
 }

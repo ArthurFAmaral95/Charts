@@ -18,6 +18,7 @@ import { UserProps } from '../../types/types'
 import { CountBox } from '../../components/CountBox/CountBox'
 
 import { RepoBox } from '../../components/RepoBox/RepoBox'
+import { DatesBox } from '../../components/DatesBox/DatesBox'
 
 export function UserPage() {
   const [login, setLogin] = useState<string>('')
@@ -195,6 +196,10 @@ export function UserPage() {
               location={userData.location}
               login={userData.login}
               name={userData.name}
+            />
+            <DatesBox
+              created={userData.created_at}
+              modified={userData.updated_at}
             />
           </section>
         </div>

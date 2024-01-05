@@ -72,8 +72,59 @@ h1 {
   text-transform: capitalize;
 }
 
+.dates.box {
+  width: 30rem;
+}
+
+.user-profile.box {
+  padding: 2rem 1rem;
+
+  width: 30rem;
+
+  gap: 2rem;
+}
+
+.repos-boxes .repo {
+  width: calc(50% - 2rem);
+  min-width: 30rem;
+
+  justify-content: space-evenly;
+}
+
+.repos-boxes .repo .top,
+.repos-boxes .repo .bottom {
+  display: flex;
+
+  align-items: center;
+}
+
+.repos-boxes .repo .top {
+  gap: 0.5rem;
+}
+
+.repos-boxes .repo .middle {
+  height: 4rem;
+  overflow: hidden;
+}
+
+.repos-boxes .repo .bottom {
+  justify-content: space-between;
+}
+
 /* ICONS */
 
 .icon {
   max-width: 2.5rem;
+}
+
+/* LISTS */
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
 }
